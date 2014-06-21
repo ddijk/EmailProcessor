@@ -13,28 +13,27 @@ package nl.dijkrosoft.snippets.email.sponsorzwemmen;
 public class Container {
 
   public Container(int i, String content) {
-    this.i = i;
-    this.content = content;
-    System.out.println("i="+i+", "+content);
+    this.endOfFieldIndex = i;
+    this.fieldValue = content;   
   }
   
-  int i;
-  String content;
+  int endOfFieldIndex;
+  String fieldValue;
 
-  public int getI() {
-    return i;
+  public int getEndOfFieldIndex() {
+    return endOfFieldIndex;
   }
 
-  public void setI(int i) {
-    this.i = i;
+  public void setEndOfFieldIndex(int endOfFieldIndex) {
+    this.endOfFieldIndex = endOfFieldIndex;
   }
 
-  public String getContent() {
-    return content;
+  public String getFieldValue() {
+    return fieldValue;
   }
 
-  public void setContent(String content) {
-    this.content = content;
+  public void setFieldValue(String fieldValue) {
+    this.fieldValue = fieldValue;
   }
   
   
