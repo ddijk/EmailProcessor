@@ -5,12 +5,11 @@
  */
 package nl.dijkrosoft.snippets.email.sponsorzwemmen;
 
+import java.io.IOException;
 import java.util.Properties;
-import javax.mail.Address;
-import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
-import javax.mail.Multipart;
+import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
 
@@ -18,7 +17,7 @@ import javax.mail.Store;
  *
  * @author dick
  */
-public class ReadingMail {
+public class ReadAllMails {
 
     public static void main(String[] args) {
         Properties props = new Properties();
@@ -30,19 +29,16 @@ public class ReadingMail {
 
             Folder inbox = store.getFolder("INBOX");
             inbox.open(Folder.READ_ONLY);
-   //   Message msg = inbox.getMessage(inbox.getMessageCount());
-//      Address[] in = msg.getFrom();
-//      for (Address address : in) {
-//	System.out.println("FROM:" + address.toString());
-//      }
-
+   
             for (Message msg : inbox.getMessages()) {
 
                 String[] zwemmer = processContent("" + msg.getContent());
                 System.out.println(zwemmer[1] + "," + zwemmer[0] + "," + zwemmer[2] + "," + zwemmer[3] + "," + zwemmer[4]);
             }
-        } catch (Exception mex) {
-            mex.printStackTrace();
+        } catch (MessagingException mex) {
+            System.err.println("Failed. "+mex);
+        } catch (IOException mex) {
+            System.err.println("Failed. " + mex);
         }
     }
 

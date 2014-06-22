@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author dick
  */
-public class ReadingMailTest {
+public class ReadAllMailsTest {
   
   String input = "h1>Aanmelding sponsorzwemmen</h1><p><strong>Dank voor de aanmelding. Succes met zwemmen!<br />\n" +
 "<br />\n" +
@@ -31,7 +31,7 @@ public class ReadingMailTest {
     
     String[] expected =  new String[] {"Jula","Uffing", "groep 4" ,"Drie koningenschool", "n.uffing@planet.nl" };
     
-    String[] actual = ReadingMail.processContent(input);
+    String[] actual = ReadAllMails.processContent(input);
     
     Assert.assertArrayEquals(expected, actual);
   }
