@@ -6,40 +6,37 @@
 package nl.dijkrosoft.snippets.email.sponsorzwemmen;
 
 import java.io.IOException;
-import java.util.Properties;
-import javax.mail.Folder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
-import static nl.dijkrosoft.snippets.email.sponsorzwemmen.ReadAllMails.processContent;
 
 /**
  *
  * @author Dick
  */
-public class ReadOneMail {
+public class ReadOneMail extends AbstractInboxProvider {
 
-    public static void main(String[] args) {
-        Properties props = new Properties();
-        props.setProperty("mail.store.protocol", "imaps");
+    private static final int OLDEST_MESSAGE = 1;
+
+    @Override
+    void processInbox() {
         try {
-            Session session = Session.getInstance(props, null);
-            Store store = session.getStore();
-            store.connect("imap.xs4all.nl", "spzwemme", "Utrechtnovum14");
+            Message msg = inbox.getMessage(OLDEST_MESSAGE);
 
-            Folder inbox = store.getFolder("INBOX");
-            inbox.open(Folder.READ_ONLY);
+            List<String> zwemmerFields = new ArrayList<>();
+            MessageBodyParser.processContent("" + msg.getContent(), zwemmerFields);
+            System.out.println(zwemmerFields.get(1) + "," + zwemmerFields.get(0) + "," + zwemmerFields.get(2) + "," + zwemmerFields.get(3) + "," + zwemmerFields.get(4));
 
-            Message msg = inbox.getMessage(84);
-
-            String[] zwemmer = processContent("" + msg.getContent());
-            System.out.println(zwemmer[1] + "," + zwemmer[0] + "," + zwemmer[2] + "," + zwemmer[3] + "," + zwemmer[4]);
-
-        } catch (MessagingException mex) {
-            System.err.println("Failed. " + mex);
-        } catch (IOException mex) {
-            System.err.println("Failed. " + mex);
+        } catch (MessagingException | IOException ex) {
+            Logger.getLogger(ReadAllMails.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void main(String[] args) throws MessagingException {
+        ReadOneMail rom = new ReadOneMail();
+        rom.getMessages();
     }
 }
