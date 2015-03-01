@@ -1,6 +1,13 @@
 package nl.dijkrosoft.snippets.email.sponsorzwemmen;
 
 import java.util.Properties;
+import javax.mail.Address;
+import javax.mail.BodyPart;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Store;
 
 public class ReadingEmailMultpart {
 
