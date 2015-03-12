@@ -5,12 +5,8 @@
  */
 package nl.dijkrosoft.snippets.email.sponsorzwemmen;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import javax.mail.Folder;
-import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
@@ -24,16 +20,19 @@ public abstract class AbstractInboxProvider {
 
     protected Folder inbox;
 
-
-    
     void getMessages() throws NoSuchProviderException, MessagingException {
-         Properties props = new Properties();
-        props.setProperty("mail.store.protocol", "imaps");
+        Properties props = new Properties();
+        props.put("mail.store.protocol", "imaps");
+        props.put("mail.host", "p-9020");
+        //  props.put("mail.smtp.port", "25");
+        props.put("mail.debug", "true");
+        props.put("mail.debug.auth", "true");
+        //     mail.debug.auth
 
         Session session = Session.getInstance(props, null);
         Store store = session.getStore();
-        store.connect("imap.xs4all.nl", "spzwemme", "Utrechtnovum14");
-
+        store.connect("imap.xs4all.nl", "spzwemme", "Sponsorzwemmen15");
+        //     store.connect("p-9020", "dickd", "aragon");
         inbox = store.getFolder("INBOX");
         inbox.open(Folder.READ_ONLY);
 
