@@ -17,29 +17,35 @@ import javax.mail.MessagingException;
  *
  * @author dick
  */
-public class ReadAllMails extends AbstractInboxProvider{
+public class ReadAllMails extends AbstractInboxProvider {
+
+    private ReadAllMails(String folder) {
+        super(folder);
+    }
 
     @Override
     void processInbox() {
         try {
             for (Message msg : inbox.getMessages()) {
-                
+
                 List<String> zwemmerFields = new ArrayList<>();
                 MessageBodyParser.processContent("" + msg.getContent(), zwemmerFields);
-                System.out.println(zwemmerFields.get(1) + "," + zwemmerFields.get(0) + "," + zwemmerFields.get(2) + "," + zwemmerFields.get(3) + "," + zwemmerFields.get(4));
+//                List<String> orderedFieldOfSwimmer = new ArrayList<>();
+//                for ( int i =0; i<zwemmerFields.size();i++) {
+//                    orderedFieldOfSwimmer.add(null)
+//                }
+//                System.out.println(zwemmerFields.get(0) + "," + zwemmerFields.get(1) + "," + zwemmerFields.get(2) + "," + zwemmerFields.get(3) + "," + zwemmerFields.get(4));
+                System.out.println(String.join(", ", zwemmerFields));
             }
         } catch (MessagingException | IOException ex) {
             Logger.getLogger(ReadAllMails.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-      public static void main(String[] args) throws MessagingException {
-        ReadAllMails ram = new ReadAllMails();
+
+    public static void main(String[] args) throws MessagingException {
+        //  ReadAllMails ram = new ReadAllMails("inbox/editie2014");
+        ReadAllMails ram = new ReadAllMails("inbox");
         ram.getMessages();
     }
-
-
-
-
 
 }

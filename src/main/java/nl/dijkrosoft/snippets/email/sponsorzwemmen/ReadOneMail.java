@@ -21,10 +21,15 @@ public class ReadOneMail extends AbstractInboxProvider {
 
     private static final int OLDEST_MESSAGE = 1;
 
+    public ReadOneMail(String folder) {
+        super(folder);
+    }
+
     @Override
     void processInbox() {
         try {
             Message msg = inbox.getMessage(OLDEST_MESSAGE);
+            System.out.println("aantal=" + inbox.getMessageCount());
 
             List<String> zwemmerFields = new ArrayList<>();
             MessageBodyParser.processContent("" + msg.getContent(), zwemmerFields);
@@ -34,9 +39,9 @@ public class ReadOneMail extends AbstractInboxProvider {
             Logger.getLogger(ReadAllMails.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void main(String[] args) throws MessagingException {
-        ReadOneMail rom = new ReadOneMail();
+        ReadOneMail rom = new ReadOneMail("inbox");
         rom.getMessages();
     }
 }
